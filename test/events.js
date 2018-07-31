@@ -142,9 +142,7 @@ describe('events', function() {
         };
       }
       beforeEach(function () {
-        Server.server.methods.profileCache.drop = sinon.spy(function (uid, cb) {
-          cb();
-        });
+        Server.server.methods.profileCache.drop = sinon.spy(function (uid) {});
       });
 
       it('invalidate cache', function (done) {
