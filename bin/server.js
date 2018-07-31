@@ -9,21 +9,30 @@ require('../lib/newrelic')();
 const configuration = require('../lib/config');
 const db = require('../lib/db');
 const logger = require('../lib/logging')('bin.server');
-const server = require('../lib/server').create();
-const events = require('../lib/events')(server);
 
 // The stringify/parse is to force the output back to unindented json.
 logger.info('config', JSON.stringify(JSON.parse(configuration.toString())));
-db.ping().done(function() {
-  server.start(function(err) {
-    if (err) {
-      logger.critical('server.start', err);
-      process.exit(1);
-    }
+
+
+async function start() {
+  const server = await require('../lib/server').create();
+
+  try {
+    await db.ping();
+  } catch (err) {
+    logger.critical('db.ping', err);
+    process.exit(2);
+  }
+  try {
+    await server.start();
     logger.info('listening', server.info.uri);
-  });
-  events.start();
-}, function(err) {
-  logger.critical('db.ping', err);
-  process.exit(2);
-});
+    const events = require('../lib/events')(server);
+    events.start();
+  } catch (err) {
+    logger.critical('server.start', err);
+    process.exit(1);
+  }
+}
+
+start();
+

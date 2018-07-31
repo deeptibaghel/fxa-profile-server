@@ -4,15 +4,16 @@
 
 const config = require('../lib/config').getProperties();
 const logger = require('../lib/logging')('bin._static');
-const server = require('../lib/server/_static');
+
+async function create() {
+  const server = await require('../lib/server/_static').create();
+  server.start().then(() => {
+    logger.info('listening', server.info.uri);
+  });
+}
+create();
 
 if (config.env !== 'development') {
   logger.warn('sanity-check', 'static bin should only be used for local dev!');
 }
-
-server.create().then(() => {
-  server.start().then(() => {
-    logger.info('listening', server.info.uri);
-  });
-})
 
