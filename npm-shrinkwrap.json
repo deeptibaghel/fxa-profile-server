@@ -2132,25 +2132,19 @@
       }
     },
     "insist": {
-      "version": "1.0.0",
-      "resolved": "https://registry.npmjs.org/insist/-/insist-1.0.0.tgz",
-      "integrity": "sha1-W+Sa55tzM3XgsXLxhLklxfxETHc=",
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/insist/-/insist-1.0.1.tgz",
+      "integrity": "sha1-ITdKECnUoTpidEEV38LTMTQYldQ=",
       "dev": true,
       "requires": {
-        "esprima": "^2.0.0",
-        "stack-trace": "^0.0.7"
+        "esprima": "^4.0.0",
+        "stack-trace": "^0.0.10"
       },
       "dependencies": {
         "esprima": {
-          "version": "2.7.3",
-          "resolved": "https://registry.npmjs.org/esprima/-/esprima-2.7.3.tgz",
-          "integrity": "sha1-luO3DVd59q1JzQMmc9HDEnZ7pYE=",
-          "dev": true
-        },
-        "stack-trace": {
-          "version": "0.0.7",
-          "resolved": "https://registry.npmjs.org/stack-trace/-/stack-trace-0.0.7.tgz",
-          "integrity": "sha1-xy4Il0T8Nln1CM3ONiGvVjTsD/8=",
+          "version": "4.0.1",
+          "resolved": "https://registry.npmjs.org/esprima/-/esprima-4.0.1.tgz",
+          "integrity": "sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A==",
           "dev": true
         }
       }

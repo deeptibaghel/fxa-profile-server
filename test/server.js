@@ -11,6 +11,10 @@ const db = require('../lib/db');
 
 /*global describe,it*/
 
+beforeEach(function () {
+  return Server.server();
+});
+
 describe('server', function() {
   function checkVersionAndHeaders(path) {
     return function(done) {
@@ -29,7 +33,7 @@ describe('server', function() {
         Object.keys(res.headers).forEach(function(header) {
           assert.ok(! other[header.toLowerCase()]);
         });
-      }).done(done, done);
+      });
     };
   }
 

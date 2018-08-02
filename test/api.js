@@ -57,6 +57,10 @@ const SIZE_SUFFIXES = Object.keys(SIZES).map(function(val) {
 const GRAVATAR =
   'https://secure.gravatar.com/avatar/00000000000000000000000000000000';
 
+beforeEach(function () {
+  return Server.server();
+});
+
 afterEach(function() {
   mock.done();
 });
@@ -81,8 +85,6 @@ describe('/profile', function() {
       assert.equal(res.result.avatar, avatarShared.fxaUrl(DEFAULT_AVATAR_ID), 'return default avatar');
       assert.equal(res.result.avatarDefault, true, 'has the default avatar flag');
       assertSecurityHeaders(res);
-    }).catch((err) => {
-      console.log(err);
     });
   });
 
