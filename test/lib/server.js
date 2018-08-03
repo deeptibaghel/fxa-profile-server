@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 const version = require('../../lib/config').get('api.version');
-const P = require('../../lib/promise');
+//const P = require('../../lib/promise');
 
 var server;
 var api = {};
@@ -21,14 +21,20 @@ function opts(options) {
   return options;
 }
 
+function request(options) {
+  return new Promise((resolve) => {
+    server.inject(options).then((res) => {
+      return resolve(res);
+    });
+  });
+}
 
 async function expose() {
   ['GET', 'POST', 'PUT', 'DELETE'].forEach(function (method) {
     exports[method.toLowerCase()] = exports[method] = async function (options) {
       options = opts(options);
       options.method = method;
-      const res = await server.inject(options);
-      return res;
+      return request(options);
     };
   });
 

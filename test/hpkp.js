@@ -6,6 +6,7 @@ const assert = require('insist');
 
 /*global describe,it,beforeEach*/
 
+
 function clearRequireCache() {
   // Delete require cache so that correct configuration values get injected when
   // recreating server
@@ -34,39 +35,36 @@ describe('HPKP', function () {
       clearRequireCache();
     });
 
-    it('should set report header', function (done) {
+    it('should set report header', async () =>  {
       process.env.HPKP_REPORT_ONLY = false;
-      Server = require('../lib/server').create();
-      Server.inject(requestOptions).then(function (res) {
+      Server = await require('../lib/server').create();
+      await Server.inject(requestOptions).then(function (res) {
         assert.equal(res.statusCode, 200);
         assert.equal(res.headers['public-key-pins'], 'pin-sha256="orlando="; pin-sha256="magic="; max-age=1; includeSubdomains');
-        done();
-      }).catch(done);
+      });
     });
 
-    it('should set report-only header', function (done) {
+    it('should set report-only header', async () => {
       process.env.HPKP_REPORT_ONLY = true;
-      Server = require('../lib/server').create();
-      Server.inject(requestOptions).then(function (res) {
+      Server = await require('../lib/server').create();
+      await Server.inject(requestOptions).then(function (res) {
         assert.equal(res.statusCode, 200);
         assert.equal(res.headers['public-key-pins-report-only'], 'pin-sha256="orlando="; pin-sha256="magic="; max-age=1; includeSubdomains');
-        done();
-      }).catch(done);
+      });
     });
   });
 
   describe('disabled', function () {
-    it('should set no header', function (done) {
+    it('should set no header', async () => {
       process.env.HPKP_ENABLE = false;
 
       clearRequireCache();
-      Server = require('../lib/server').create();
-      Server.inject(requestOptions).then(function (res) {
+      Server = await require('../lib/server').create();
+      await Server.inject(requestOptions).then(function (res) {
         assert.equal(res.statusCode, 200);
         assert.equal(res.headers['public-key-pins'], undefined);
         assert.equal(res.headers['public-key-pins-report-only'], undefined);
-        done();
-      }).catch(done);
+      });
     });
   });
 });
