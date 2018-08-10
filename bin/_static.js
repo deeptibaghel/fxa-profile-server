@@ -7,9 +7,8 @@ const logger = require('../lib/logging')('bin._static');
 
 async function create() {
   const server = await require('../lib/server/_static').create();
-  server.start().then(() => {
-    logger.info('listening', server.info.uri);
-  });
+  await server.start();
+  logger.info('listening', server.info.uri);
 }
 create();
 

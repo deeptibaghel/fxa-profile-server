@@ -57,15 +57,18 @@ const SIZE_SUFFIXES = Object.keys(SIZES).map(function(val) {
 const GRAVATAR =
   'https://secure.gravatar.com/avatar/00000000000000000000000000000000';
 
-beforeEach(function () {
-  return Server.server();
-});
-
 afterEach(function() {
   mock.done();
 });
 
 describe('/profile', function() {
+
+  beforeEach(function () {
+    return Server.server();
+  });
+
+  afterEach(() => Server.server.stop);
+
   var tok = token();
   var user = uid();
 
@@ -415,6 +418,12 @@ describe('/email', function() {
 describe('/_core_profile', () => {
   const tok = token();
 
+  beforeEach(function () {
+    return Server.server();
+  });
+
+  afterEach(() => Server.server.stop);
+
   it('should be hidden from external callers by default', () => {
     return Server.api.get({
       url: '/_core_profile',
@@ -552,6 +561,12 @@ describe('/_core_profile', () => {
 describe('/uid', function() {
   var tok = token();
 
+  beforeEach(function () {
+    return Server.server();
+  });
+
+  afterEach(() => Server.server.stop);
+
   it('should return an uid', function() {
     mock.tokenGood();
     return Server.api.get({
@@ -589,6 +604,12 @@ describe('/avatar', function() {
   var user = uid();
   var id1 = avatarId();
   var id2 = avatarId();
+
+  beforeEach(function () {
+    return Server.server();
+  });
+
+  afterEach(() => Server.server.stop);
 
   describe('GET', function() {
     before(function() {
@@ -665,6 +686,11 @@ describe('/avatar', function() {
   });
 
   describe('upload', function() {
+
+    beforeEach(function () {
+      return Server.server();
+    });
+    afterEach(() => Server.server.stop);
 
     it('should upload a new avatar', function() {
       this.slow(2000);
@@ -792,6 +818,10 @@ describe('/avatar', function() {
   describe('DELETE', function() {
     var user = uid();
 
+    beforeEach(function () {
+      return Server.server();
+    });
+    afterEach(() => Server.server.stop);
 
     it('should require :write scope', function() {
       mock.token({
@@ -855,7 +885,11 @@ describe('/avatar', function() {
     describe('uploaded', function() {
       var s3url;
       var id;
-      beforeEach(function() {
+      afterEach(() => Server.server.stop);
+
+      beforeEach(async function() {
+        await Server.server();
+
         mock.token({
           user: user,
           scope: ['profile:avatar:write']
@@ -934,6 +968,11 @@ describe('/avatar', function() {
 describe('/display_name', function() {
   var tok = token();
 
+  beforeEach(function () {
+    return Server.server();
+  });
+  afterEach(() => Server.server.stop);
+
   describe('GET', function() {
     it('should return a displayName', function() {
       mock.token({
@@ -993,6 +1032,13 @@ describe('/display_name', function() {
   });
 
   describe('POST', function() {
+
+    beforeEach(function () {
+      return Server.server();
+    });
+
+    afterEach(() => Server.server.stop);
+
     it('should post a new display name', function() {
       var NAME = 'Spock';
       mock.token({
