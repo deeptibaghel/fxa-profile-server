@@ -62,12 +62,14 @@ afterEach(function() {
 });
 
 describe('/profile', function() {
+  var instance;
 
-  beforeEach(function () {
-    return Server.server();
+  beforeEach(async () => {
+    instance = await Server.server();
+    return instance;
   });
 
-  afterEach(() => Server.server.stop);
+  afterEach(() => instance.stop());
 
   var tok = token();
   var user = uid();
@@ -417,12 +419,14 @@ describe('/email', function() {
 
 describe('/_core_profile', () => {
   const tok = token();
+  var instance;
 
-  beforeEach(function () {
-    return Server.server();
+  beforeEach(async () => {
+    instance = await Server.server();
+    return instance;
   });
 
-  afterEach(() => Server.server.stop);
+  afterEach(() => instance.stop());
 
   it('should be hidden from external callers by default', () => {
     return Server.api.get({
@@ -560,12 +564,14 @@ describe('/_core_profile', () => {
 
 describe('/uid', function() {
   var tok = token();
+  var instance;
 
-  beforeEach(function () {
-    return Server.server();
+  beforeEach(async () => {
+    instance = await Server.server();
+    return instance;
   });
 
-  afterEach(() => Server.server.stop);
+  afterEach(() => instance.stop());
 
   it('should return an uid', function() {
     mock.tokenGood();
@@ -604,12 +610,14 @@ describe('/avatar', function() {
   var user = uid();
   var id1 = avatarId();
   var id2 = avatarId();
+  var instance;
 
-  beforeEach(function () {
-    return Server.server();
+  beforeEach(async () => {
+    instance = await Server.server();
+    return instance;
   });
 
-  afterEach(() => Server.server.stop);
+  afterEach(() => instance.stop());
 
   describe('GET', function() {
     before(function() {
@@ -686,11 +694,14 @@ describe('/avatar', function() {
   });
 
   describe('upload', function() {
+    var instance;
 
-    beforeEach(function () {
-      return Server.server();
+    beforeEach(async () => {
+      instance = await Server.server();
+      return instance;
     });
-    afterEach(() => Server.server.stop);
+
+    afterEach(() => instance.stop());
 
     it('should upload a new avatar', function() {
       this.slow(2000);
@@ -817,11 +828,14 @@ describe('/avatar', function() {
 
   describe('DELETE', function() {
     var user = uid();
+    var instance;
 
-    beforeEach(function () {
-      return Server.server();
+    beforeEach(async () => {
+      instance = await Server.server();
+      return instance;
     });
-    afterEach(() => Server.server.stop);
+
+    afterEach(() => instance.stop());
 
     it('should require :write scope', function() {
       mock.token({
@@ -885,10 +899,12 @@ describe('/avatar', function() {
     describe('uploaded', function() {
       var s3url;
       var id;
-      afterEach(() => Server.server.stop);
+      var instance;
+
+      afterEach(() => instance.stop());
 
       beforeEach(async function() {
-        await Server.server();
+        instance = await Server.server();
 
         mock.token({
           user: user,
@@ -967,11 +983,14 @@ describe('/avatar', function() {
 
 describe('/display_name', function() {
   var tok = token();
+  var instance;
 
-  beforeEach(function () {
-    return Server.server();
+  beforeEach(async () => {
+    instance = await Server.server();
+    return instance;
   });
-  afterEach(() => Server.server.stop);
+
+  afterEach(() => instance.stop());
 
   describe('GET', function() {
     it('should return a displayName', function() {
@@ -1032,12 +1051,14 @@ describe('/display_name', function() {
   });
 
   describe('POST', function() {
+    var instance;
 
-    beforeEach(function () {
-      return Server.server();
+    beforeEach(async () => {
+      instance = await Server.server();
+      return instance;
     });
 
-    afterEach(() => Server.server.stop);
+    afterEach(() => instance.stop());
 
     it('should post a new display name', function() {
       var NAME = 'Spock';
