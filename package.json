@@ -27,6 +27,7 @@
     "hapi-hpkp": "2.0.0",
     "inert": "5.1.0",
     "joi": "13.5.2",
+    "lodash.clonedeep": "4.5.0",
     "mozlog": "2.2.0",
     "mysql": "2.11.1",
     "mysql-patcher": "0.7.0",
